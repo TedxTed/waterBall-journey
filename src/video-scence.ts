@@ -1,4 +1,4 @@
-import Scene from './scence'
+import Scene from './scene'
 
 export default class VideoScence extends Scene {
   calculateExpAward (): number {

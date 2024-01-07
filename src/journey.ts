@@ -2,18 +2,33 @@ import { type Decimal } from 'decimal.js'
 import { StringUtils } from './utils/string-utils'
 import { NumberUtils } from './utils/number-utils'
 import type Chapter from './chapter'
+import Adventurer from './adventurer'
+import type Student from './student'
 
 export default class Journey {
   private _name: string
   private _description: string
   private _price: Decimal
   private _chapters: Chapter[]
+  private _adventures: Adventurer[]
 
-  constructor (name: string, description: string, price: Decimal, chapters: Chapter[]) {
+  constructor (name: string, description: string, price: Decimal, chapters: Chapter[], adventures: Adventurer[]) {
     this.name = name
     this.description = description
     this.price = price
     this.chapters = chapters
+    this.adventures = adventures
+  }
+
+  public join (student: Student): Adventurer {
+    const number = this.adventures.length + 1
+
+    const adventurer: Adventurer = new Adventurer(number, student, this)
+
+    this.adventures.push(adventurer)
+    student.adventures.push(adventurer)
+
+    return adventurer
   }
 
   public get name (): string {
@@ -46,5 +61,13 @@ export default class Journey {
 
   public set chapters (value: Chapter[]) {
     this._chapters = ArrayUtils.requireNonNull(value)
+  }
+
+  public get adventures (): Adventurer[] {
+    return this._adventures
+  }
+
+  public set adventures (adventures: Adventurer[]) {
+    this._adventures = adventures
   }
 }

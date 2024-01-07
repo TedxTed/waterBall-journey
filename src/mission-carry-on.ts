@@ -3,13 +3,23 @@ import type Student from './student'
 
 enum State {
   ONGOING,
-  COMPLETE,
+  COMPLETED,
 }
 
 export default class MissionCarryOn {
-  private state: State = State.ONGOING
+  private _state: State = State.ONGOING
   private _student: Student
   private _mission: Mission
+
+  constructor (student: Student, mission: Mission) {
+    this.student = student
+    this.mission = mission
+  }
+
+  public complete (): void {
+    this.state = State.COMPLETED
+    this.student.gainExp(this.mission.calculateExpAward())
+  }
 
   public get student (): Student {
     return this._student
@@ -25,5 +35,13 @@ export default class MissionCarryOn {
 
   public set mission (mission: Mission) {
     this._mission = mission
+  }
+
+  public get state (): State {
+    return this._state
+  }
+
+  public set state (state: State) {
+    this._state = state
   }
 }

@@ -1,4 +1,8 @@
+import type Adventurer from './adventurer'
 import LevelSheet from './levelSheet'
+import type Mission from './mission'
+import MissionCarryOn from './mission-carry-on'
+import ValidatorUtils from './utils/validator-utils'
 
 class Student {
   private static readonly levelSheet: LevelSheet = new LevelSheet()
@@ -6,10 +10,14 @@ class Student {
   private _password: string
   private _level = 1
   private _exp = 0
+  private _missionCarryOns: MissionCarryOn[]
+  private _adventures: Adventurer[]
 
-  constructor (account: string, password: string) {
+  constructor (account: string, password: string, missionCarryOns: MissionCarryOn[], adventures: Adventurer[]) {
     this._account = account
     this._password = password
+    this.missionCarryOns = missionCarryOns
+    this.adventures = adventures
   }
 
   public gainExp (exp: number): void {
@@ -20,6 +28,13 @@ class Student {
     for (let index = 0; index < levelUp; index++) {
       this.levelUp()
     }
+  }
+
+  public carryOn (mission: Mission): MissionCarryOn {
+    console.log('任務 學員開始新任務')
+    const missionCarryOn = new MissionCarryOn(this, mission)
+    this._missionCarryOns.push(missionCarryOn) // 單向關聯
+    return missionCarryOn
   }
 
   private levelUp (): void {
@@ -37,6 +52,22 @@ class Student {
 
   public get exp (): number {
     return this._exp
+  }
+
+  public get missionCarryOns (): MissionCarryOn[] {
+    return this._missionCarryOns
+  }
+
+  public set missionCarryOns (missionCarryOns: MissionCarryOn[]) {
+    this._missionCarryOns = ValidatorUtils.requireNonNull(missionCarryOns)
+  }
+
+  public get adventures (): Adventurer[] {
+    return this._adventures
+  }
+
+  public set adventures (adventures: Adventurer[]) {
+    this._adventures = ValidatorUtils.requireNonNull(adventures)
   }
 }
 
