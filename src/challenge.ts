@@ -1,4 +1,7 @@
-class Challenge {
+import { NumberUtils } from './utils/number-utils'
+import { StringUtils } from './utils/string-utils'
+
+export default class Challenge {
   private name: string
   private number: number
 
