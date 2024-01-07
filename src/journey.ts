@@ -4,46 +4,47 @@ import { NumberUtils } from './utils/number-utils'
 import type Chapter from './chapter'
 
 export default class Journey {
-  private name: string
-  private description: string
-  private price: Decimal
-  private chapters: Chapter[]
+  private _name: string
+  private _description: string
+  private _price: Decimal
+  private _chapters: Chapter[]
 
   constructor (name: string, description: string, price: Decimal, chapters: Chapter[]) {
-    this.setName(name)
-    this.setDescription(description)
-    this.setPrice(price)
+    this.name = name
+    this.description = description
+    this.price = price
+    this.chapters = chapters
   }
 
-  public setName (name: string): void {
-    this.name = StringUtils.lengthShouldBe(name, 30, 1)
+  public get name (): string {
+    return this._name
   }
 
-  public setDescription (description: string): void {
-    this.description = StringUtils.lengthShouldBe(description, 0, 300)
+  public set name (value: string) {
+    this._name = StringUtils.lengthShouldBe(value, 30, 1)
   }
 
-  public setPrice (price: Decimal): void {
-    this.price = NumberUtils.checkDecimalAmountExceeds(price, 1)
+  public get description (): string {
+    return this._description
   }
 
-  public setChapter (chapters: Chapter[]): void {
-    this.chapters = ArrayUtils.requireNonNull(chapters)
+  public set description (value: string) {
+    this._description = StringUtils.lengthShouldBe(value, 300, 0)
   }
 
-  public getName (): string {
-    return this.name
+  public get price (): Decimal {
+    return this._price
   }
 
-  public getDescription (): string {
-    return this.description
+  public set price (value: Decimal) {
+    this._price = NumberUtils.checkDecimalAmountExceeds(value, 0)
   }
 
-  public getPrice (): Decimal {
-    return this.price
+  public get chapters (): Chapter[] {
+    return this._chapters
   }
 
-  public getChapters (): Chapter[] {
-    return this.chapters
+  public set chapters (value: Chapter[]) {
+    this._chapters = ArrayUtils.requireNonNull(value)
   }
 }

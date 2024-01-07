@@ -1,4 +1,4 @@
-import Scene from './scence'
+import Scene from './scene'
 
 export default class ContentScence extends Scene {
   calculateExpAward (): number {

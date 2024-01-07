@@ -4,48 +4,56 @@ import { NumberUtils } from './utils/number-utils'
 import { StringUtils } from './utils/string-utils'
 import ValidatorUtils from './utils/validator-utils'
 
-class Mission {
-  private name: string
-  private number: number
-  private challenge: Challenge
-  private scenes: Scene[]
+export default class Mission {
+  private _name: string
+  private _number: number
+  private _challenge: Challenge
+  private _scenes: Scene[]
 
   constructor (name: string, num: number, challenge: Challenge, scenes: Scene[]) {
-    this.setName(name)
-    this.setNumber(num)
-    this.setChallenge(challenge)
-    this.setScenes(scenes)
+    this.name = name
+    this.number = num
+    this.challenge = challenge
+    this.scenes = scenes
   }
 
-  public cacluateExpAward (): number {
-    const sum = this.scenes.reduce((accumulator, scene) => {
+  public calculateExpAward (): number {
+    const sum = this._scenes.reduce((accumulator, scene) => {
       return accumulator + scene.calculateExpAward()
     }, 0)
 
     return sum
   }
 
-  public getName (): string {
-    return this.name
+  public get name (): string {
+    return this._name
   }
 
-  public getNumber (): number {
-    return this.number
+  public set name (value: string) {
+    this._name = StringUtils.lengthShouldBe(value, 1, 30)
   }
 
-  public setName (name: string): void {
-    this.name = StringUtils.lengthShouldBe(name, 1, 30)
+  public get number (): number {
+    return this._number
   }
 
-  public setNumber (num: number): void {
-    this.number = NumberUtils.checkNumberShouldBePositive(num)
+  public set number (value: number) {
+    this._number = NumberUtils.checkNumberShouldBePositive(value)
   }
 
-  public setChallenge (challenge: Challenge): void {
-    this.challenge = ValidatorUtils.requireNonNull(challenge)
+  public get challenge (): Challenge {
+    return this._challenge
   }
 
-  public setScenes (scenes: Scene[]): void {
-    this.scenes = ValidatorUtils.requireNonNull(scenes)
+  public set challenge (value: Challenge) {
+    this._challenge = ValidatorUtils.requireNonNull(value)
+  }
+
+  public get scenes (): Scene[] {
+    return this._scenes
+  }
+
+  public set scenes (value: Scene[]) {
+    this._scenes = ValidatorUtils.requireNonNull(value)
   }
 }

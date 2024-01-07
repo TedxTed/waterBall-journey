@@ -2,27 +2,27 @@ import { NumberUtils } from './utils/number-utils'
 import { StringUtils } from './utils/string-utils'
 
 export default class Challenge {
-  private name: string
-  private number: number
+  private _name: string
+  private _number: number
 
   constructor (name: string, number: number) {
-    this.setName(name)
-    this.setNumber(number)
+    this.name = name
+    this.number = number
   }
 
-  public getName (): string {
-    return this.name
+  public get name (): string {
+    return this._name
   }
 
-  public getNumber (): number {
-    return this.number
+  public set name (value: string) {
+    this._name = StringUtils.lengthShouldBe(value, 1, 30)
   }
 
-  public setName (name: string): void {
-    this.name = StringUtils.lengthShouldBe(name, 1, 30)
+  public get number (): number {
+    return this._number
   }
 
-  public setNumber (number: number): void {
-    this.number = NumberUtils.checkNumberShouldBePositive(number)
+  public set number (value: number) {
+    this._number = NumberUtils.checkNumberShouldBePositive(value)
   }
 }
